@@ -4,10 +4,10 @@
 // 
 
 
-let suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'],
-    values = ['Ace', 'King', 'Queen', 'Jack',
-    'Ten', 'Nine', 'Eight', 'Seven', 'Six',
-    'Five', 'Four', 'Three', 'Two'];
+let suit = ['Hearts', 'Clubs', 'Diamonds', 'Spades'],
+    value = ['Ace', 'King', 'Queen', 'Jack',
+        'Ten', 'Nine', 'Eight', 'Seven', 'Six',
+        'Five', 'Four', 'Three', 'Two'];
 
 let textArea = document.getElementById('text-area'),
     newGameButton = document.getElementById('new-game-button'),
@@ -27,15 +27,15 @@ hitButton.style.display = 'none';
 stayButton.style.display = 'none';
 showStatus();
 
-newGameButton.addEventListener('click', function() {
+newGameButton.addEventListener('click', function () {
     gameStarted = true;
     gameOver = false;
-    playerWon = false; 
-    
+    playerWon = false;
+
     deck = createDeck();
     shuffleDeck(deck);
-    dealerCards = [ getNextCard(), getNextCard() ];
-    playerCards = [ getNextCard(), getNextCard() ];
+    dealerCards = [getNextCard(), getNextCard()];
+    playerCards = [getNextCard(), getNextCard()];
 
     newGameButton.style.display = 'none';
     hitButton.style.display = 'inline';
@@ -46,14 +46,17 @@ newGameButton.addEventListener('click', function() {
 
 function createDeck() {
     let deck = [];
-    for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
-        for (let valueIdx = 0; valueIdx < values.length; valueIdx++)
+    for (let suitIdx = 0; suitIdx < suit.length; suitIdx++) {
+        for (let valueIdx = 0; valueIdx < value.length; valueIdx++) {
             var card = {
-                suit: suits[suitIdx],
-                Value: values[valueIdx]
+                suit: suit[suitIdx],
+                value: value[valueIdx]
             };
+        console.log(card);
         deck.push(card);
+        }
     }
+
     return deck;
 }
 
@@ -79,8 +82,8 @@ function showStatus() {
         textArea.innerText = 'Welcome to Blackjack!';
         return;
     }
-    for (var i=0; i<deck.length; i++) {
-        textArea.innerText +='\n' + getCardString(deck[i]);
+    for (var i = 0; i < deck.length; i++) {
+        textArea.innerText += '\n' + getCardString(deck[i]);
     }
 }
- 
+
