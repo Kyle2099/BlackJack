@@ -1,6 +1,8 @@
 // 
 // Blackjack
 // by Kyle Souther-Bruno
+// 
+
 
 let suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'],
     values = ['Ace', 'King', 'Queen', 'Jack',
@@ -8,9 +10,9 @@ let suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'],
     'Five', 'Four', 'Three', 'Two'];
 
 let textArea = document.getElementById('text-area'),
-    newGameButton = document.getElementById('newGameButton'),
-    hitButton = document.getElementById('hitButton'),
-    stayButton = document.getElementById('stayButton');
+    newGameButton = document.getElementById('new-game-button'),
+    hitButton = document.getElementById('hit-button'),
+    stayButton = document.getElementById('stay-button');
 
 let gameStarted = false,
     gameOver = false,
@@ -21,49 +23,64 @@ let gameStarted = false,
     playerScore = 0,
     deck = [];
 
-newGameButton.addEventListener('click', function () {
+hitButton.style.display = 'none';
+stayButton.style.display = 'none';
+showStatus();
 
-    hitButton.style.display = 'none';
-    stayButton.style.display = 'none';
-    showStatus();
-
+newGameButton.addEventListener('click', function() {
+    gameStarted = true;
+    gameOver = false;
+    playerWon = false; 
+    
     deck = createDeck();
-    dealerCards = [getNextCard(), getNextCard()];
-    playerCards = [getNextCard(), getNextCard()];
+    shuffleDeck(deck);
+    dealerCards = [ getNextCard(), getNextCard() ];
+    playerCards = [ getNextCard(), getNextCard() ];
 
-
-    textArea.innerText = 'Started...';
     newGameButton.style.display = 'none';
     hitButton.style.display = 'inline';
     stayButton.style.display = 'inline';
-
+    showStatus();
 });
 
 
 function createDeck() {
     let deck = [];
     for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
-        for (let valueIdx = 0; valueIdx < values.length; valuesIdx++)
-            let card = {
+        for (let valueIdx = 0; valueIdx < values.length; valueIdx++)
+            var card = {
                 suit: suits[suitIdx],
                 Value: values[valueIdx]
             };
-        createDesk.push(card);
+        deck.push(card);
     }
     return deck;
 }
 
+function shuffleDeck(deck) {
+    for (let i = 0; i < deck.length; i++) {
+        let swapIdx = Math.trunc(Math.random() * deck.length);
+        let tmp = deck[swapIdx];
+        deck[swapIdx] = deck[i];
+        deck[i] = tmp;
+    }
+}
+
+function getCardString(card) {
+    return card.value + ' of ' + card.suit;
+}
+
 function getNextCard() {
-    return deck.shift()
+    return deck.shift();
 }
 
-for (let i = 0; i < deck.length; i++) {
-    console.log(deck[i]);
+function showStatus() {
+    if (!gameStarted) {
+        textArea.innerText = 'Welcome to Blackjack!';
+        return;
+    }
+    for (var i=0; i<deck.length; i++) {
+        textArea.innerText +='\n' + getCardString(deck[i]);
+    }
 }
-
-let playerCards = [deck[0], deck[2]];
-
-console.log('Welcome to Blackjack!');
-console.log('You are dealt: ');
-console.log(' ' + playerCards[0]);
-console.log(' ' + playerCards[1]);
+ 
