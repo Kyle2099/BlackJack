@@ -82,6 +82,16 @@ function showStatus() {
         textArea.innerText = 'Welcome to Blackjack!';
         return;
     }
+    let dealerCardString = ' ';
+    for (let i=0; i < dealerCards.length; i++) {
+        dealerCardString += getCardString(dealerCard[i]) + '\n';
+    }
+
+    let playerCardString = ' ';
+    for (let i=0; i < playerCards.length; i++); {
+        
+    }
+
     for (var i = 0; i < deck.length; i++) {
         textArea.innerText += '\n' + getCardString(deck[i]);
     }
