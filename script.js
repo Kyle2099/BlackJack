@@ -52,8 +52,8 @@ function createDeck() {
                 suit: suit[suitIdx],
                 value: value[valueIdx]
             };
-        console.log(card);
-        deck.push(card);
+            console.log(card);
+            deck.push(card);
         }
     }
 
@@ -77,23 +77,73 @@ function getNextCard() {
     return deck.shift();
 }
 
+function getCardNumericValue(card) {
+    switch(card.value) {
+        case 'Ace'
+    }
+}
+
+function getScore(cardArray) {
+    let score = 0;
+    let hasAce = false;
+    for (let i = 0; i < cardArray.length; i++) {
+        let card = cardArray[i];
+        score += getCardNumericValue(card);
+        if (card.value === 'Ace') {
+            hasAce = true;
+        }
+    }
+    if (hasAce && score + 10 <=21) {
+        return score + 10;
+    }
+    return score;
+}
+
+
+function updateScores() {
+    dealerScore = getScore(dealerCards);
+    playerScore = getScore(playerCards);
+}
+
 function showStatus() {
     if (!gameStarted) {
         textArea.innerText = 'Welcome to Blackjack!';
         return;
     }
     let dealerCardString = ' ';
-    for (let i=0; i < dealerCards.length; i++) {
+    for (let i = 0; i < dealerCards.length; i++) {
         dealerCardString += getCardString(dealerCard[i]) + '\n';
     }
 
     let playerCardString = ' ';
-    for (let i=0; i < playerCards.length; i++); {
-        
+    for (let i = 0; i < playerCards.length; i++); {
+        playerCardString += getCardString(playerCards[i]) + '\n';
     }
 
-    for (var i = 0; i < deck.length; i++) {
-        textArea.innerText += '\n' + getCardString(deck[i]);
+    updateScores();
+
+    textArea.innerText =
+        'Dealer has:\n' +
+        dealerCardString +
+        '(score: ' + dealerScore + ')\n\n' +
+
+        'Player has:\n' +
+        playerCardString +
+        '(score: ' + playerScore + ')\n\n';
+
+}
+
+if (gameOver) {
+    if (playerWon) {
+        textArea.innerText += 'You Win!'
     }
+    else {
+        textArea.innerText += 'Dealer Wins!'
+    }
+    newGameButton.style.display = 'none';
+    hitButton.style.display = 'inline';
+    stayButton.style.display = 'inline';
+}
+
 }
 
