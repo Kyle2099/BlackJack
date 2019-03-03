@@ -43,6 +43,18 @@ newGameButton.addEventListener('click', function () {
     showStatus();
 });
 
+hitButton.addEventListener('click', function(){
+    playerCards.push(getNextCard());
+    checkForEndOfGame();
+    showStatus();
+});
+
+stayButton.addEventListener('click', function(){
+    gameOver = true;
+    checkForEndOfGame();
+    showStatus();
+});
+
 
 function createDeck() {
     let deck = [];
@@ -79,7 +91,26 @@ function getNextCard() {
 
 function getCardNumericValue(card) {
     switch(card.value) {
-        case 'Ace'
+        case 'Ace':
+        return 1;
+        case 'Two':
+            return 2;
+        case 'Three':
+            return 3;
+        case 'Four':
+            return 4;
+        case 'Five':
+            return 5;
+        case 'Six':
+            return 6;
+        case 'Seven':
+            return 7;
+        case 'Eight':
+            return 8;
+        case 'Nine':
+            return 9;
+        default:
+            return 10;
     }
 }
 
@@ -103,6 +134,10 @@ function getScore(cardArray) {
 function updateScores() {
     dealerScore = getScore(dealerCards);
     playerScore = getScore(playerCards);
+}
+
+function checkForEndOfGame() {
+    // TODO
 }
 
 function showStatus() {
@@ -145,5 +180,5 @@ if (gameOver) {
     stayButton.style.display = 'inline';
 }
 
-}
+
 
