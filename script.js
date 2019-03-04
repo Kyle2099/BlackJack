@@ -43,13 +43,13 @@ newGameButton.addEventListener('click', function () {
     showStatus();
 });
 
-hitButton.addEventListener('click', function(){
+hitButton.addEventListener('click', function () {
     playerCards.push(getNextCard());
     checkForEndOfGame();
     showStatus();
 });
 
-stayButton.addEventListener('click', function(){
+stayButton.addEventListener('click', function () {
     gameOver = true;
     checkForEndOfGame();
     showStatus();
@@ -81,18 +81,18 @@ function shuffleDeck(deck) {
     }
 }
 
-function getCardString(card) {
-    return card.value + ' of ' + card.suit;
-}
+// function getCardString(card) {
+//     return card.value + ' of ' + card.suit;
+// }
 
-function getNextCard() {
-    return deck.shift();
-}
+// function getNextCard() {
+//     return deck.shift();
+// }
 
 function getCardNumericValue(card) {
-    switch(card.value) {
+    switch (card.value) {
         case 'Ace':
-        return 1;
+            return 1;
         case 'Two':
             return 2;
         case 'Three':
@@ -124,7 +124,7 @@ function getScore(cardArray) {
             hasAce = true;
         }
     }
-    if (hasAce && score + 10 <=21) {
+    if (hasAce && score + 10 <= 21) {
         return score + 10;
     }
     return score;
@@ -137,7 +137,37 @@ function updateScores() {
 }
 
 function checkForEndOfGame() {
-    // TODO
+
+    updateScores();
+
+    if (gameOver) {
+        while (dealerScore < playerScore
+            && playerScore <= 21
+            && dealerScore <= 21) {
+            dealerCards.push(getNextCard());
+            updateScores();
+        }
+    }
+    if (playerScore > 21) {
+        playerWon = false;
+        gameOver = true;
+    }
+    else if (dealerScore > 21) {
+        playerWon = true;
+        gameOver = true;
+    }
+    else if (gameOver) {
+        if (playerScore > dealerScore) {
+            playerWon = true;
+        }
+        else {
+            playerWon = false;
+        }
+
+        newGameButton.style.display = 'none';
+        hitButton.style.display = 'inline';
+        stayButton.style.display = 'inline';
+    }
 }
 
 function showStatus() {
